@@ -1,4 +1,4 @@
-const fs = require("fs"); // file reading
+const { readFile } = require("fs"); // file reading
 const { resolve } = require('path');
 const { readdir } = require('fs').promises;
 
@@ -20,7 +20,7 @@ const getFiles = async (dir) => {
 getFiles(pathToFiles)
     .then((files) => {
         files.forEach((file) => {
-            fs.readFile(file, 'utf8', (err, data) => {
+            readFile(file, 'utf8', (err, data) => {
                 if (err) console.log(err);
                 if (data.includes(args)) {
                     console.log(`${args} found in ${file}.`);
