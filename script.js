@@ -3,7 +3,7 @@ const { resolve } = require('path');
 const { readdir } = require('fs').promises;
 
 var args = process.argv.slice(2); // slice usefull args
-const pathToFiles = './files/'; 
+const pathToFiles = './files/';
 
 const getFiles = async (dir) => {
     // read directory
@@ -15,3 +15,19 @@ const getFiles = async (dir) => {
     }));
     return Array.prototype.concat(...files);
 }
+
+// call with path specified
+getFiles(pathToFiles)
+    .then((files) => {
+        files.forEach((file) => {
+            fs.readFile(file, 'utf8', (err, data) => {
+                if (err) console.log(err);
+                if (data.includes(args)) {
+                    console.log(`${args} found in ${file}.`);
+                } else {
+                    console.log(`${args} not found.`);
+                }
+            });
+        });
+    })
+    .catch(e => console.error(e));
